@@ -16,6 +16,7 @@
             th:onclick="|location.href=`@{/new-article}`|"
             class="btn btn-secondary btn-sm mb-3">글 등록</button>
 
+
     <div class="row-6" th:each="item : ${articles}">
         <div class="card">
             <div class="card-header" th:text="${item.id}">
@@ -25,6 +26,10 @@
                 <p class="card-text" th:text="${item.content}"></p>
                 <a th:href="@{/articles/{id}(id=${item.id})}"
                    class="btn btn-primary">보러가기</a>
+
+                <a th:href="@{/createPdf/{id}(id=${item.id})}"
+                   class="btn btn-primary">pdf생성하기</a>
+
             </div>
         </div>
         <br>
