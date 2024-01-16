@@ -29,6 +29,10 @@
 
                 <a th:href="@{/createPdf/{id}(id=${item.id})}"
                    class="btn btn-primary">pdf생성하기</a>
+
+                <!-- PDF 변환 버튼 -->
+                <button type="button" id="convert-pdf-btn" class="btn btn-success btn-sm">PDF로 변환</button>
+
             </div>
         </div>
         <br>
@@ -36,4 +40,6 @@
 </div>
 
 <script src="/js/article.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+
 </body>

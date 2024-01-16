@@ -64,6 +64,7 @@ if(createButton){
 document.getElementById('convert-pdf-btn').addEventListener('click', () => {
     // PDF로 변환할 HTML 요소 선택
     const element = document.body; // 혹은 특정 요소를 선택할 수 있습니다.
+    alert(element);
 
     // html2pdf 옵션 설정
     const opt = {
@@ -75,6 +76,6 @@ document.getElementById('convert-pdf-btn').addEventListener('click', () => {
     };
 
     // HTML 요소를 PDF로 변환
-    html2pdf().from(element).set(opt).save();
+     html2pdf().from(element).set(opt).save();
 });
 
