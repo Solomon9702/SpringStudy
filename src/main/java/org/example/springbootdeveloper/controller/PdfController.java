@@ -7,7 +7,6 @@ import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -33,8 +32,6 @@ public class PdfController {
 
     private final BlogService blogService;
 
-    @Autowired
-    private BlogRepository blogRepository;
 
     @GetMapping("/createPdf/{id}")
     public void createPdf(HttpServletResponse response, @PathVariable Long id) throws IOException {
@@ -62,6 +59,14 @@ public class PdfController {
                 .setTextAlignment(TextAlignment.CENTER) // 가운데 정렬
                 .setFontSize(22); // 글자 크기를 18로 설정
         document.add(monthParagraph);
+
+        Paragraph titleParagraph =new Paragraph(article.getTitle())
+                .setFont(font);
+        document.add(titleParagraph);
+
+        Paragraph contentParagraph =new Paragraph(article.getContent())
+                .setFont(font);
+        document.add(contentParagraph);
 
         // 문서 닫기
             document.close();
