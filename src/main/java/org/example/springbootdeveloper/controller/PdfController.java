@@ -1,6 +1,7 @@
 package org.example.springbootdeveloper.controller;
 
 import com.itextpdf.io.font.PdfEncodings;
+import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.ColorConstants;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
@@ -10,7 +11,6 @@ import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.PdfCanvas;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.property.TextAlignment;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -43,12 +43,16 @@ public class PdfController {
                 {100, 100}, // 첫 번째 데이터 포인트 (x, y)
                 {150, 200}, // 두 번째 데이터 포인트
                 {200, 150}, // 세 번째 데이터 포인트
-                {250, 180}, // 네 번째 데이터 포인트
-                // 더 많은 데이터 포인트를 추가할 수 있습니다.
+                {250, 180},
+                {300, 210},
+                {350, 322},
+                {400, 112},
+                {450, 102},
+                {500, 51},
         };
 
         // 선 그래프 그리기
-        canvas.setColor(ColorConstants.BLACK, false); // 선 색상 설정
+        canvas.setColor(ColorConstants.RED, false); // 선 색상 설정
         canvas.setLineWidth(2); // 선 두께 설정
 
         // 데이터 포인트를 선으로 연결
@@ -60,32 +64,32 @@ public class PdfController {
         canvas.stroke(); // 선 그리기
     }
 
-    private void drawBarChart(PdfDocument pdfDoc){
+    private void drawBarChart(PdfDocument pdfDoc, int xPlace, int yPlace){
         // 현재 페이지 얻기
         PdfPage currentPage = pdfDoc.getLastPage();
         PdfCanvas canvas = new PdfCanvas(currentPage);
 
         // 바 그래프 데이터
-        int[] data = {50, 100, 150, 200, 250};
+        int[] data = {15, 30, 50, 20, 50};
+        Color[] colors = {ColorConstants.RED, ColorConstants.GREEN, ColorConstants.BLUE, ColorConstants.YELLOW, ColorConstants.ORANGE};
 
         // 바 그래프 그리기
-        int x = 50; // 시작 x 좌표
-        int y = 100; // 시작 y 좌표
-        int width = 50; // 바의 너비
-        int gap = 10; // 바 사이의 간격
+        int x = xPlace; // 시작 x 좌표
+        int y = yPlace; // 시작 y 좌표
+        int width = 20; // 바의 너비
+        int gap = 0; // 바 사이의 간격
 
-        for (int value : data) {
+        for (int i = 0; i < data.length; i++) {
             // 바 그리기
-            canvas.rectangle(x, y, width, value);
-            canvas.setColor(ColorConstants.BLACK, true);
+            canvas.setColor(colors[i], true); // 각 막대에 다른 색상 적용
+            canvas.rectangle(x, y, width, data[i]);
             canvas.fill();
 
             // 다음 바를 위한 x 좌표 업데이트
-            x += width + gap;
+            x += (width + gap + 10);
 
         }
     }
-
 
     private final BlogService blogService;
 
@@ -128,7 +132,11 @@ public class PdfController {
         document.add(titleParagraph);
 
         // 그래프 그리는 메소드 호출
-        drawBarChart(pdfDoc);
+        drawBarChart(pdfDoc,50, 500);
+        drawBarChart(pdfDoc,200, 500);
+        drawBarChart(pdfDoc,350, 500);
+        drawBarChart(pdfDoc,500, 500);
+
 
         // 선그래프 그리는 메소드 호출
         drawLineChart(pdfDoc);
